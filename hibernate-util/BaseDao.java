@@ -68,6 +68,21 @@ public class BaseDao<T,PK extends Serializable> {
 		
 		return criteria.list();
 	}
+	public T findByHQL(String hql,Object... params) {
+        Query query = getSession().createQuery(hql);
+        for (int i = 0;i < params.length;i++) {
+            query.setParameter(i,params[i]);
+        }
+        return (T)query.uniqueResult();
+    }
+
+    public List<T> findListByHQL(String hql,Object... params) {
+        Query query = getSession().createQuery(hql);
+        for (int i = 0;i < params.length;i++) {
+            query.setParameter(i,params[i]);
+        }
+        return query.list();
+    }
 	
 	public Pager<T> findAll(Integer pageNO,List<SearchParam> searchParams){
 		Criteria criteria = getSession().createCriteria(pojoClass);
