@@ -7,15 +7,21 @@
   	
   	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:config/applicationContext*.xml</param-value>
+		<param-value>classpath*:config/applicationContext*.xml</param-value>
 	</context-param>
-
 	<!--  Spring 容器启动监听器 -->
 	<listener>
 		<description>spring listerner</description>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	<!--
 		Spring MVC 的Servlet，它将加载WEB-INF/hyz-servlet.xml 的 配置文件，以启动Spring MVC模块
 	-->
@@ -34,7 +40,8 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
-	<filter>
+	
+	<!-- <filter>
 		<filter-name>openEntityManagerInViewFilter</filter-name>
 		<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
 	</filter>
@@ -42,7 +49,7 @@
 	<filter-mapping>
 		<filter-name>openEntityManagerInViewFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+	</filter-mapping> -->
 
 	<filter>
 		<filter-name>encodingFilter</filter-name>
